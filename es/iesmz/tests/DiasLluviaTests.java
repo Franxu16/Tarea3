@@ -68,4 +68,25 @@ public class DiasLluviaTests {
         diasLluvia.registroDia(10, 1, true); // Día 10 de enero lluvioso
         assertNotEquals(0, diasLluvia.trimestreLluvioso());
     }
+    //Cuarto commit
+    @Test
+    void testPrimerDiaLluvia() throws Exception {
+        DiasLluvia A = new DiasLluvia();
+        A.registroDia(1, 1, true);
+        assertEquals(1, A.primerDiaLluvia());
+    }
+
+    @Test
+    void testPrimerDiaLluvia2() throws Exception {
+        DiasLluvia A = new DiasLluvia();
+        A.registroDia(2,8, false);
+        assertEquals(-1, A.primerDiaLluvia());
+    }
+
+    @Test
+    void testPrimerDiaLluvia3() throws Exception {
+        DiasLluvia A = new DiasLluvia();
+        A.registroDia(1,1, false);
+        assertNotEquals(1, A.primerDiaLluvia());
+    }
 }
