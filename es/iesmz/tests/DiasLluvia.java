@@ -13,36 +13,60 @@ public class DiasLluvia {
     }
 
     //Metodos
-    public void registroDia(int dia, int mes, boolean lluvia) throws Exception{
-        if(dia <= 31 && mes <= 12){
-            anyo[mes][dia] = lluvia;
-        }else{
-            throw new Exception("FECHA INCORRECTA O INEXSISTENTE QUE NO PUEDE SER INTRODUCIDA EN EL CALENDARIO");
+    public boolean registroDia(int dia, int mes, boolean lluvia){
+        if(dia < 1 || mes < 1 || dia > anyo.length || mes > anyo[0].length){
+            System.out.println("NO SE HA PODIDO REGISTRAR EL DIA DESEADO");
+            return false;
         }
+        anyo[mes-1][dia-1] = lluvia;
+        return true;
     }
 
     public boolean consultarDia(int dia, int mes) throws Exception{
-        for (int i = 0; i < anyo.length; i++) {
-            for (int j = 0; j < anyo[i].length; j++) {
-                if(anyo[i][j] && dia == 1){
-                    System.out.println("Dias: " + j);
-                    return true;
-                }
-            }
+        if(dia < 1 || mes < 1 || dia > anyo.length || mes > anyo[0].length){
+            System.out.println("El " + dia + "de " + mes + "esta fuera del rango de registro");
+            return false;
         }
-        System.out.println("No existe el día: ");
-        return false;
+        return anyo[mes-1][dia-1];
     }
 
     public int contarDiasLluviosos() throws Exception{
-
+        int C = 0;
+        for (int i = 0; i < anyo.length; i++) {
+            for (int j = 0; j < anyo[i].length; j++) {
+                if (anyo[i][j]) C++;
+            }
+        }
+        return C;
     }
+    public int trimestreLluvioso() throws Exception {
+        int[] trimestres = new int[4];
 
-    public int trimestreLluvioso() throws Exception{
+        for (int i = 0; i < anyo.length; i++) {
+            for (int j = 0; j < anyo[i].length; j++) {
+                if (anyo[i][j]) {
+                    if (i >= 0 && i <= 2) { // Trimestre 1: enero a marzo
+                        trimestres[0]++;
+                    } else if (i >= 3 && i <= 5) { // Trimestre 2: abril a junio
+                        trimestres[1]++;
+                    } else if (i >= 6 && i <= 8) { // Trimestre 3: julio a septiembre
+                        trimestres[2]++;
+                    } else { // Trimestre 4: octubre a diciembre
+                        trimestres[3]++;
+                    }
+                }
+            }
+        }
 
-    }
+        int trimestreMasLluvioso = 0;
+        int maxLluvia = trimestres[0];
+        for (int i = 1; i < trimestres.length; i++) {
+            if (trimestres[i] > maxLluvia) {
+                maxLluvia = trimestres[i];
+                trimestreMasLluvioso = i;
+            }
+        }
 
-    public int primerDiaLluvia() throws Exception{
-
+        return trimestreMasLluvioso + 1;
     }
 }
